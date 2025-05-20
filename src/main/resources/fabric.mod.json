@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "othoumod",
+  "version": "${version}",
+  "name": "OthouMod_1.21",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/Augma/OthouMod_1.21"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/othoumod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "fr.augma.othoumod.client.OthouMod_1_21Client"
+    ],
+    "main": [
+      "fr.augma.othoumod.OthouMod_1_21"
+    ]
+  },
+  "mixins": [
+    "othoumod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
