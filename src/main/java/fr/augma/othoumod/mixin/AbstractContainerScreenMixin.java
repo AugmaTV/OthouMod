@@ -27,9 +27,10 @@ public abstract class AbstractContainerScreenMixin<T extends AbstractContainerMe
 
     @Inject(method = "keyPressed", at = @At("HEAD"), cancellable = true)
     public void keyPressed(int i, int j, int k, CallbackInfoReturnable<Boolean> cir) {
-        if (OthouMod_1_21Client.keyBinding.matches(i, j) && hoveredSlot != null && hoveredSlot.hasItem()) {
-            ClientPlayNetworking.send(new CompactPayload(this.hoveredSlot.getContainerSlot()));
+        if (OthouMod_1_21Client.keyBinding.matches(i, j) && this.hoveredSlot != null && this.hoveredSlot.hasItem()) {
+            ClientPlayNetworking.send(new CompactPayload(this.hoveredSlot.index));
             cir.setReturnValue(true);
         }
     }
+
 }

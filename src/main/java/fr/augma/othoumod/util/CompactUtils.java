@@ -17,16 +17,20 @@ import java.util.Optional;
 public class CompactUtils {
 
     public static void compact(final ServerPlayer player, final int slotId) {
+        if (player.isCreative()) {
+            return;
+        }
+
         if (player.getInventory().getFreeSlot() == -1) {
-            player.sendSystemMessage(Component.literal("T'es full inv chef, au moins un petite place stp"));
+            player.sendSystemMessage(Component.literal("You'r full inventory, please leave some space :)"));
             return;
         }
 
-        if (player.inventoryMenu == null) {
+        if (player.containerMenu == null) {
             return;
         }
 
-        final Slot slot = player.inventoryMenu.getSlot(slotId);
+        final Slot slot = player.containerMenu.getSlot(slotId);
         if (slot != null && slot.hasItem()) {
             final ItemStack stack = slot.getItem().copy();
             stack.setCount(1);
@@ -35,15 +39,19 @@ public class CompactUtils {
     }
 
     public static void compact(final ServerPlayer player) {
+        if (player.isCreative()) {
+            return;
+        }
+
         if (player.getInventory().getFreeSlot() == -1) {
-            player.sendSystemMessage(Component.literal("T'es full inv chef, au moins un petite place stp"));
+            player.sendSystemMessage(Component.literal("You'r full inventory, please leave some space :)"));
             return;
         }
 
         final ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND).copy();
         stack.setCount(1);
         if (stack == ItemStack.EMPTY) {
-            player.sendSystemMessage(Component.literal("Merci d'avoir un item dans la main enculé"));
+            player.sendSystemMessage(Component.literal("You need to have an item in hand"));
             return;
         }
 
@@ -51,9 +59,13 @@ public class CompactUtils {
     }
 
     public static void compact(final ServerPlayer player, final ItemStack stack) {
+        if (player.isCreative()) {
+            return;
+        }
+
         int itemCount = PlayerInventoryUtils.getItemStackCount(player.getInventory(), stack);
         if (itemCount < 9) {
-            player.sendSystemMessage(Component.literal("Plus de 9 item plz fait un effort"));
+            player.sendSystemMessage(Component.literal("You need to have at least 9 items of this type in you inventory to compact it"));
             return;
         }
 
@@ -62,7 +74,7 @@ public class CompactUtils {
 
         final Optional<RecipeHolder<CraftingRecipe>> optRecipe = player.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, workbenchInput, player.level());
         if (!optRecipe.isPresent()) {
-            player.sendSystemMessage(Component.literal("Aucun craft existe pour cette item t'es vraiment con"));
+            player.sendSystemMessage(Component.literal("No craft found for this item"));
             return;
         }
 
